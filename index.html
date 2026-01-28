@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espaços para Eventos - Imperial, Dunlop e Palmeira Real</title>
+    <title>ID Eventos Campinas - Espaços para Eventos</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -428,28 +428,6 @@
             font-size: 2rem;
         }
 
-        /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-        }
-
-        .spinner {
-            border: 3px solid rgba(233, 69, 96, 0.1);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .no-photos {
             text-align: center;
             padding: 3rem 2rem;
@@ -750,34 +728,36 @@
 
     <script>
         // =============================================
-        // CONFIGURAÇÃO DAS FOTOS - ATUALIZE AQUI!
+        // CONFIGURAÇÃO PRINCIPAL
         // =============================================
-        // Adicione os nomes dos arquivos das fotos que estão nas pastas
-        // Coloque os nomes exatos (com extensão: .jpg, .png, etc.)
+        
+        // Definição das fotos por local
+        // ATUALIZE AQUI COM OS NOMES EXATOS DAS SUAS FOTOS!
         const fotosPorLocal = {
             'imperial': [
                 'foto1.jpg',
-                'foto2.jpg',
-                'foto3.jpg'
+                'foto2.jpg'
             ],
             'dunlop': [
-                'foto1.jpg',
-                'foto2.jpg',
-                'foto3.jpg'
+                'foto1.jpg', 
+                'foto2.jpg'
             ],
             'palmeira': [
                 'foto1.jpg',
-                'foto2.jpg',
-                'foto3.jpg'
+                'foto2.jpg'
             ]
         };
 
-        // Mapeamento de nomes de pasta
+        // Mapeamento dos tipos para nomes de pastas
         const localMapping = {
             'imperial': 'Imperial',
             'dunlop': 'Dunlop',
             'palmeira': 'Palmeira'
         };
+
+        // =============================================
+        // FUNÇÕES PRINCIPAIS
+        // =============================================
 
         // Abrir modal
         function openModal(tipo) {
@@ -810,7 +790,7 @@
             }
         }
 
-        // Carregar galeria de fotos da lista estática
+        // Carregar galeria de fotos
         function carregarGaleria(tipo) {
             const gallery = document.getElementById(`gallery-${tipo}`);
             const nomePasta = localMapping[tipo];
@@ -820,10 +800,15 @@
             gallery.innerHTML = '';
 
             if (fotos.length > 0) {
+                // Adicionar contador de fotos
                 gallery.innerHTML = `<div class="foto-counter">📸 ${fotos.length} foto${fotos.length > 1 ? 's' : ''} disponível${fotos.length > 1 ? 'eis' : ''}</div>`;
                 
+                // Adicionar cada foto à galeria
                 fotos.forEach((foto, index) => {
-                    const caminhoDaFoto = `/fotos/${nomePasta}/${foto}`;
+                    // CAMINHO DIRETO PARA AS FOTOS NA RAIZ DO PROJETO
+                    // A pasta 'fotos' está no mesmo nível do index.html
+                    const caminhoDaFoto = `fotos/${nomePasta}/${foto}`;
+                    
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
                     item.style.animationDelay = `${index * 0.05}s`;
@@ -832,6 +817,7 @@
                     gallery.appendChild(item);
                 });
             } else {
+                // Mensagem quando não há fotos
                 gallery.innerHTML = `
                     <div class="no-photos">
                         <div class="icon">📷</div>
@@ -842,23 +828,23 @@
             }
         }
 
-        // Lightbox
+        // Lightbox para visualizar imagens ampliadas
         function openLightbox(src) {
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
             img.src = src;
             lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         // Abrir WhatsApp
         function abrirWhatsApp() {
-            // ⚠️ IMPORTANTE: ALTERE O NÚMERO ABAIXO PARA O SEU WHATSAPP
-            // Formato: 5519999999999 (55 = Brasil, 19 = DDD, 999999999 = número)
             const numeroWhatsApp = '5519988255587'; 
             const mensagem = encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações sobre os espaços para eventos.');
             const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
@@ -871,14 +857,13 @@
                 document.querySelectorAll('.modal.active').forEach(modal => {
                     modal.classList.remove('active');
                 });
-                document.body.style.overflow = 'auto';
                 closeLightbox();
+                document.body.style.overflow = 'auto';
             }
         });
 
-        // Carregar galerias assim que a página carregar (opcional, para pré-carregar)
+        // Pré-carregar galerias ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
-            // Pré-carregar as galerias
             ['imperial', 'dunlop', 'palmeira'].forEach(tipo => {
                 carregarGaleria(tipo);
             });
