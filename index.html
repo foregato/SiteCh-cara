@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID Eventos Campinas - Espaços para Eventos</title>
+    <title>Espaços para Eventos - Imperial, Dunlop e Palmeira Real</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -428,6 +428,28 @@
             font-size: 2rem;
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .spinner {
+            border: 3px solid rgba(233, 69, 96, 0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .no-photos {
             text-align: center;
             padding: 3rem 2rem;
@@ -607,7 +629,10 @@
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-imperial" class="gallery">
-                        <!-- As fotos serão carregadas aqui -->
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Carregando fotos...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -641,7 +666,10 @@
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-dunlop" class="gallery">
-                        <!-- As fotos serão carregadas aqui -->
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Carregando fotos...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -674,7 +702,10 @@
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-palmeira" class="gallery">
-                        <!-- As fotos serão carregadas aqui -->
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Carregando fotos...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -727,37 +758,15 @@
     <div class="whatsapp-float" onclick="abrirWhatsApp()" title="Falar no WhatsApp"></div>
 
     <script>
-        // =============================================
-        // CONFIGURAÇÃO PRINCIPAL
-        // =============================================
-        
-        // Definição das fotos por local
-        // ATUALIZE AQUI COM OS NOMES EXATOS DAS SUAS FOTOS!
-        const fotosPorLocal = {
-            'imperial': [
-                'foto1.jpg',
-                'foto2.jpg'
-            ],
-            'dunlop': [
-                'foto1.jpg', 
-                'foto2.jpg'
-            ],
-            'palmeira': [
-                'foto1.jpg',
-                'foto2.jpg'
-            ]
-        };
+        // Configuração da API (se estiver rodando localmente)
+        const API_URL = 'http://localhost:3000/api';
 
-        // Mapeamento dos tipos para nomes de pastas
+        // Mapeamento de nomes de pasta
         const localMapping = {
             'imperial': 'Imperial',
             'dunlop': 'Dunlop',
             'palmeira': 'Palmeira'
         };
-
-        // =============================================
-        // FUNÇÕES PRINCIPAIS
-        // =============================================
 
         // Abrir modal
         function openModal(tipo) {
@@ -768,7 +777,7 @@
                 
                 // Carregar fotos se for um dos espaços
                 if (['imperial', 'dunlop', 'palmeira'].includes(tipo)) {
-                    carregarGaleria(tipo);
+                    carregarGaleriaDaPasta(tipo);
                 }
             }
         }
@@ -790,61 +799,65 @@
             }
         }
 
-        // Carregar galeria de fotos
-        function carregarGaleria(tipo) {
+        // Carregar galeria de fotos da pasta via API
+        async function carregarGaleriaDaPasta(tipo) {
             const gallery = document.getElementById(`gallery-${tipo}`);
             const nomePasta = localMapping[tipo];
-            const fotos = fotosPorLocal[tipo] || [];
 
-            // Limpar conteúdo anterior
-            gallery.innerHTML = '';
+            try {
+                const response = await fetch(`${API_URL}/fotos/${nomePasta}`);
+                const data = await response.json();
 
-            if (fotos.length > 0) {
-                // Adicionar contador de fotos
-                gallery.innerHTML = `<div class="foto-counter">📸 ${fotos.length} foto${fotos.length > 1 ? 's' : ''} disponível${fotos.length > 1 ? 'eis' : ''}</div>`;
-                
-                // Adicionar cada foto à galeria
-                fotos.forEach((foto, index) => {
-                    // CAMINHO DIRETO PARA AS FOTOS NA RAIZ DO PROJETO
-                    // A pasta 'fotos' está no mesmo nível do index.html
-                    const caminhoDaFoto = `fotos/${nomePasta}/${foto}`;
+                if (data.success && data.fotos.length > 0) {
+                    gallery.innerHTML = `<div class="foto-counter">📸 ${data.total} foto${data.total > 1 ? 's' : ''} disponível${data.total > 1 ? 'eis' : ''}</div>`;
                     
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.style.animationDelay = `${index * 0.05}s`;
-                    item.innerHTML = `<img src="${caminhoDaFoto}" alt="Foto do ${nomePasta}" loading="lazy">`;
-                    item.onclick = () => openLightbox(caminhoDaFoto);
-                    gallery.appendChild(item);
-                });
-            } else {
-                // Mensagem quando não há fotos
+                    data.fotos.forEach((foto, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'gallery-item';
+                        item.style.animationDelay = `${index * 0.05}s`;
+                        item.innerHTML = `<img src="${foto.url}" alt="${foto.nome}" loading="lazy">`;
+                        item.onclick = () => openLightbox(foto.url);
+                        gallery.appendChild(item);
+                    });
+                } else {
+                    gallery.innerHTML = `
+                        <div class="no-photos">
+                            <div class="icon">📷</div>
+                            <p><strong>Nenhuma foto disponível ainda</strong></p>
+                            <p>Adicione fotos na pasta <code>fotos/${nomePasta}/</code></p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar fotos:', error);
                 gallery.innerHTML = `
                     <div class="no-photos">
-                        <div class="icon">📷</div>
-                        <p><strong>Fotos em breve!</strong></p>
-                        <p>Estamos preparando as melhores imagens para você.</p>
+                        <div class="icon">⚠️</div>
+                        <p><strong>Erro ao carregar fotos</strong></p>
+                        <p>Certifique-se de que o servidor está rodando</p>
+                        <p style="font-size: 0.85rem; margin-top: 1rem;">Execute: <code>npm start</code></p>
                     </div>
                 `;
             }
         }
 
-        // Lightbox para visualizar imagens ampliadas
+        // Lightbox
         function openLightbox(src) {
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
             img.src = src;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
         }
 
         // Abrir WhatsApp
         function abrirWhatsApp() {
+            // ⚠️ IMPORTANTE: ALTERE O NÚMERO ABAIXO PARA O SEU WHATSAPP
+            // Formato: 5519999999999 (55 = Brasil, 19 = DDD, 999999999 = número)
             const numeroWhatsApp = '5519988255587'; 
             const mensagem = encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações sobre os espaços para eventos.');
             const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
@@ -857,16 +870,9 @@
                 document.querySelectorAll('.modal.active').forEach(modal => {
                     modal.classList.remove('active');
                 });
-                closeLightbox();
                 document.body.style.overflow = 'auto';
+                closeLightbox();
             }
-        });
-
-        // Pré-carregar galerias ao carregar a página
-        document.addEventListener('DOMContentLoaded', function() {
-            ['imperial', 'dunlop', 'palmeira'].forEach(tipo => {
-                carregarGaleria(tipo);
-            });
         });
     </script>
 </body>
