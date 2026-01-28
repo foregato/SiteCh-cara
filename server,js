@@ -1,0 +1,117 @@
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Servir as pastas de fotos
+app.use('/fotos', express.static('fotos'));
+
+// API para listar fotos de uma pasta específica
+app.get('/api/fotos/:local', (req, res) => {
+    const local = req.params.local;
+    const pastaPath = path.join(__dirname, 'fotos', local);
+    
+    // Verifica se a pasta existe
+    if (!fs.existsSync(pastaPath)) {
+        return res.json({ 
+            success: false, 
+            fotos: [], 
+            message: `Pasta ${local} não encontrada` 
+        });
+    }
+
+    try {
+        // Lê todos os arquivos da pasta
+        const arquivos = fs.readdirSync(pastaPath);
+        
+        // Filtra apenas imagens
+        const fotos = arquivos
+            .filter(arquivo => arquivo.match(/\.(jpg|jpeg|png|gif|webp)$/i))
+            .map(arquivo => ({
+                nome: arquivo,
+                url: `/fotos/${local}/${arquivo}`,
+                path: path.join(pastaPath, arquivo)
+            }));
+
+        res.json({ 
+            success: true, 
+            fotos: fotos,
+            total: fotos.length 
+        });
+    } catch (error) {
+        console.error('Erro ao ler pasta:', error);
+        res.status(500).json({ 
+            success: false, 
+            fotos: [], 
+            message: 'Erro ao carregar fotos' 
+        });
+    }
+});
+
+// API para listar todos os locais disponíveis
+app.get('/api/locais', (req, res) => {
+    const fotosPath = path.join(__dirname, 'fotos');
+    
+    if (!fs.existsSync(fotosPath)) {
+        fs.mkdirSync(fotosPath);
+    }
+
+    try {
+        const pastas = fs.readdirSync(fotosPath)
+            .filter(item => {
+                const itemPath = path.join(fotosPath, item);
+                return fs.statSync(itemPath).isDirectory();
+            });
+
+        res.json({ 
+            success: true, 
+            locais: pastas 
+        });
+    } catch (error) {
+        console.error('Erro ao listar locais:', error);
+        res.status(500).json({ 
+            success: false, 
+            locais: [] 
+        });
+    }
+});
+
+// Rota principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`
+╔════════════════════════════════════════════╗
+║   🚀 SERVIDOR INICIADO COM SUCESSO!       ║
+╚════════════════════════════════════════════╝
+
+📍 URL: http://localhost:${PORT}
+📁 Pasta de fotos: ./fotos/
+🌐 Servidor rodando na porta ${PORT}
+
+Estrutura esperada:
+./fotos/
+  ├── Imperial/
+  │   ├── foto1.jpg
+  │   └── foto2.jpg
+  ├── Dunlop/
+  │   ├── foto1.jpg
+  │   └── foto2.jpg
+  └── Palmeira/
+      ├── foto1.jpg
+      └── foto2.jpg
+
+💡 Dica: Coloque suas fotos nas pastas correspondentes!
+    `);
+});
