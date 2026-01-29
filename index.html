@@ -267,6 +267,11 @@
                 const imageFiles = files.filter(file => 
                     file.type === 'file' && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
                 );
+                const mapeamento = { 
+    'imperial': 'Imperial', // Deve ser 'Imperial' com I maiúsculo
+    'dunlop': 'Dunlop',     // Deve ser 'Dunlop' com D maiúsculo
+    'palmeira': 'Palmeira'  // Deve ser 'Palmeira' com P maiúsculo
+};
 
                 if (imageFiles.length === 0) {
                     gallery.innerHTML = '<div class="no-photos"><p><strong>Nenhuma foto disponível</strong></p><p>Adicione fotos na pasta fotos/' + pasta + '/ do GitHub</p></div>';
@@ -340,4 +345,5 @@
     </script>
 </body>
 </html>
+
 
