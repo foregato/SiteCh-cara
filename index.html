@@ -32,7 +32,6 @@
             line-height: 1.6;
         }
 
-        /* Animated Background */
         .bg-decoration {
             position: fixed;
             top: 0;
@@ -52,7 +51,6 @@
             50% { transform: scale(1.1) rotate(5deg); }
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             padding: 3rem 2rem;
@@ -115,14 +113,12 @@
             to { opacity: 1; }
         }
 
-        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
-        /* Menu Principal */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -220,7 +216,6 @@
             z-index: 1;
         }
 
-        /* Modal de Detalhes */
         .modal {
             display: none;
             position: fixed;
@@ -352,6 +347,9 @@
             font-weight: 600;
             transition: all 0.3s ease;
             margin-top: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
         }
 
         .map-link:hover {
@@ -360,7 +358,6 @@
             box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3);
         }
 
-        /* Galeria de Fotos */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -394,7 +391,6 @@
             transform: scale(1.1);
         }
 
-        /* WhatsApp Button */
         .whatsapp-float {
             position: fixed;
             bottom: 2rem;
@@ -428,7 +424,6 @@
             font-size: 2rem;
         }
 
-        /* Loading State */
         .loading {
             text-align: center;
             padding: 2rem;
@@ -465,7 +460,6 @@
             opacity: 0.5;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 2rem 1rem;
@@ -492,7 +486,6 @@
             }
         }
 
-        /* Image Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -601,7 +594,7 @@
         </div>
     </div>
 
-    <!-- Modais para cada espaço -->
+    <!-- Modais -->
     <div id="modal-imperial" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -628,12 +621,7 @@
 
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-imperial" class="gallery">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <p>Carregando fotos...</p>
-                        </div>
-                    </div>
+                    <div id="gallery-imperial" class="gallery"></div>
                 </div>
             </div>
         </div>
@@ -665,12 +653,7 @@
 
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-dunlop" class="gallery">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <p>Carregando fotos...</p>
-                        </div>
-                    </div>
+                    <div id="gallery-dunlop" class="gallery"></div>
                 </div>
             </div>
         </div>
@@ -701,12 +684,7 @@
 
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-palmeira" class="gallery">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <p>Carregando fotos...</p>
-                        </div>
-                    </div>
+                    <div id="gallery-palmeira" class="gallery"></div>
                 </div>
             </div>
         </div>
@@ -722,7 +700,7 @@
                 <div class="info-section">
                     <p>Para consultar datas disponíveis e fazer sua reserva, entre em contato conosco pelo WhatsApp.</p>
                     <br>
-                    <button onclick="abrirWhatsApp()" class="map-link" style="border: none; cursor: pointer;">
+                    <button onclick="abrirWhatsApp()" class="map-link">
                         💬 Consultar pelo WhatsApp
                     </button>
                 </div>
@@ -740,7 +718,7 @@
                 <div class="info-section">
                     <p>Tem alguma dúvida sobre nossos espaços? Fale conosco pelo WhatsApp e nossa equipe terá prazer em ajudá-lo!</p>
                     <br>
-                    <button onclick="abrirWhatsApp()" class="map-link" style="border: none; cursor: pointer;">
+                    <button onclick="abrirWhatsApp()" class="map-link">
                         💬 Falar pelo WhatsApp
                     </button>
                 </div>
@@ -748,21 +726,33 @@
         </div>
     </div>
 
-    <!-- Lightbox para visualizar imagens -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="" alt="Imagem ampliada">
     </div>
 
-    <!-- Botão flutuante do WhatsApp -->
     <div class="whatsapp-float" onclick="abrirWhatsApp()" title="Falar no WhatsApp"></div>
 
     <script>
-        // Configuração da API (se estiver rodando localmente)
-        const API_URL = 'http://localhost:3000/api';
+        // ⚙️ CONFIGURAÇÃO DAS FOTOS
+        // Adicione os nomes dos arquivos de foto de cada local aqui
+        const fotosPorLocal = {
+            imperial: [
+                // Adicione os nomes das fotos do Imperial aqui
+                // Exemplo: 'foto1.jpg', 'foto2.jpg', 'foto3.png'
+            ],
+            dunlop: [
+                // Adicione os nomes das fotos do Dunlop aqui
+                // Exemplo: 'foto1.jpg', 'foto2.jpg'
+            ],
+            palmeira: [
+                // Adicione os nomes das fotos da Palmeira aqui
+                // Exemplo: 'foto1.jpg', 'foto2.jpg'
+            ]
+        };
 
-        // Mapeamento de nomes de pasta
-        const localMapping = {
+        // Mapear nomes amigáveis para nomes de pasta
+        const pastasMapping = {
             'imperial': 'Imperial',
             'dunlop': 'Dunlop',
             'palmeira': 'Palmeira'
@@ -775,9 +765,8 @@
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 
-                // Carregar fotos se for um dos espaços
                 if (['imperial', 'dunlop', 'palmeira'].includes(tipo)) {
-                    carregarGaleriaDaPasta(tipo);
+                    carregarGaleria(tipo);
                 }
             }
         }
@@ -799,46 +788,35 @@
             }
         }
 
-        // Carregar galeria de fotos da pasta via API
-        async function carregarGaleriaDaPasta(tipo) {
+        // Carregar galeria de fotos
+        function carregarGaleria(tipo) {
             const gallery = document.getElementById(`gallery-${tipo}`);
-            const nomePasta = localMapping[tipo];
+            const fotos = fotosPorLocal[tipo];
+            const nomePasta = pastasMapping[tipo];
 
-            try {
-                const response = await fetch(`${API_URL}/fotos/${nomePasta}`);
-                const data = await response.json();
-
-                if (data.success && data.fotos.length > 0) {
-                    gallery.innerHTML = `<div class="foto-counter">📸 ${data.total} foto${data.total > 1 ? 's' : ''} disponível${data.total > 1 ? 'eis' : ''}</div>`;
-                    
-                    data.fotos.forEach((foto, index) => {
-                        const item = document.createElement('div');
-                        item.className = 'gallery-item';
-                        item.style.animationDelay = `${index * 0.05}s`;
-                        item.innerHTML = `<img src="${foto.url}" alt="${foto.nome}" loading="lazy">`;
-                        item.onclick = () => openLightbox(foto.url);
-                        gallery.appendChild(item);
-                    });
-                } else {
-                    gallery.innerHTML = `
-                        <div class="no-photos">
-                            <div class="icon">📷</div>
-                            <p><strong>Nenhuma foto disponível ainda</strong></p>
-                            <p>Adicione fotos na pasta <code>fotos/${nomePasta}/</code></p>
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('Erro ao carregar fotos:', error);
+            if (!fotos || fotos.length === 0) {
                 gallery.innerHTML = `
                     <div class="no-photos">
-                        <div class="icon">⚠️</div>
-                        <p><strong>Erro ao carregar fotos</strong></p>
-                        <p>Certifique-se de que o servidor está rodando</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem;">Execute: <code>npm start</code></p>
+                        <div class="icon">📷</div>
+                        <p><strong>Configure as fotos no código</strong></p>
+                        <p>Edite o array <code>fotosPorLocal.${tipo}</code> no index.html</p>
                     </div>
                 `;
+                return;
             }
+
+            gallery.innerHTML = `<div class="foto-counter">📸 ${fotos.length} foto${fotos.length > 1 ? 's' : ''} disponível${fotos.length > 1 ? 'eis' : ''}</div>`;
+
+            fotos.forEach((nomeFoto, index) => {
+                const caminhoFoto = `fotos/${nomePasta}/${nomeFoto}`;
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.style.animationDelay = `${index * 0.05}s`;
+                item.style.animation = 'fadeInUp 0.5s ease-out backwards';
+                item.innerHTML = `<img src="${caminhoFoto}" alt="${nomeFoto}" loading="lazy" onerror="this.parentElement.style.display='none'">`;
+                item.onclick = () => openLightbox(caminhoFoto);
+                gallery.appendChild(item);
+            });
         }
 
         // Lightbox
@@ -856,15 +834,15 @@
 
         // Abrir WhatsApp
         function abrirWhatsApp() {
-            // ⚠️ IMPORTANTE: ALTERE O NÚMERO ABAIXO PARA O SEU WHATSAPP
+            // ⚠️ ALTERE SEU NÚMERO AQUI
             // Formato: 5519999999999 (55 = Brasil, 19 = DDD, 999999999 = número)
-            const numeroWhatsApp = '5519988255587'; 
+            const numeroWhatsApp = '5519988255587';
             const mensagem = encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações sobre os espaços para eventos.');
             const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
             window.open(url, '_blank');
         }
 
-        // Atalho de teclado ESC para fechar modais
+        // Atalho ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal.active').forEach(modal => {
