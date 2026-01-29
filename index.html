@@ -13,547 +13,80 @@
             --accent-light: #ff6b6b;
             --gold: #ffd700;
             --cream: #f8f4ec;
-            --light: #fafafa;
-            --text: #2d2d2d;
-            --text-light: #666;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Manrope', sans-serif;
-            background: var(--cream);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .bg-decoration {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            background-image: 
-                radial-gradient(circle at 20% 30%, var(--accent) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, var(--gold) 0%, transparent 50%);
-            animation: morphBackground 20s ease-in-out infinite;
-        }
-
-        @keyframes morphBackground {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 3rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 40%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03));
-            transform: rotate(20deg);
-            animation: shimmer 8s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: rotate(20deg) translateX(0); }
-            50% { transform: rotate(20deg) translateX(50px); }
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            color: var(--light);
-            margin-bottom: 0.5rem;
-            letter-spacing: -1px;
-            position: relative;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .subtitle {
-            color: var(--gold);
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: fadeIn 1s ease-out 0.3s backwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .menu-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease-out backwards;
-        }
-
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 0;
-        }
-
-        .menu-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(233, 69, 96, 0.2);
-            border-color: var(--accent);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: #2d2d2d; overflow-x: hidden; line-height: 1.6; }
+        .bg-decoration { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.03; background-image: radial-gradient(circle at 20% 30%, var(--accent) 0%, transparent 50%), radial-gradient(circle at 80% 70%, var(--gold) 0%, transparent 50%); animation: morphBackground 20s ease-in-out infinite; }
+        @keyframes morphBackground { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) rotate(5deg); } }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: white; margin-bottom: 0.5rem; letter-spacing: -1px; animation: fadeInDown 1s ease-out; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        .subtitle { color: var(--gold); font-size: 1.1rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .menu-card { background: white; border-radius: 20px; padding: 2.5rem 2rem; text-align: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 2px solid transparent; position: relative; overflow: hidden; animation: fadeInUp 0.6s ease-out backwards; }
+        .menu-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 60px rgba(233, 69, 96, 0.2); border-color: var(--accent); }
         .menu-card:nth-child(1) { animation-delay: 0.1s; }
         .menu-card:nth-child(2) { animation-delay: 0.2s; }
         .menu-card:nth-child(3) { animation-delay: 0.3s; }
         .menu-card:nth-child(4) { animation-delay: 0.4s; }
         .menu-card:nth-child(5) { animation-delay: 0.5s; }
         .menu-card:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .menu-card .icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            display: block;
-            position: relative;
-            z-index: 1;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .menu-card:nth-child(even) .icon {
-            animation-delay: -1.5s;
-        }
-
-        .menu-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            animation: fadeIn 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 30px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 30px 90px rgba(0,0,0,0.3);
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 2.5rem;
-            border-radius: 30px 30px 0 0;
-            position: relative;
-        }
-
-        .modal-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .close-btn:hover {
-            background: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 2.5rem;
-        }
-
-        .info-section {
-            margin-bottom: 2rem;
-        }
-
-        .info-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-section p, .info-section ul {
-            color: var(--text);
-            line-height: 1.8;
-        }
-
-        .info-section ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .info-section li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .info-section li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .map-link {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 0.5rem;
-            border: none;
-            cursor: pointer;
-            font-family: 'Manrope', sans-serif;
-        }
-
-        .map-link:hover {
-            background: var(--accent-light);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3);
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            aspect-ratio: 1;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background: #f0f0f0;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 70px;
-            height: 70px;
-            background: #25D366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 999;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.15);
-            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
-        }
-
-        .whatsapp-float::before {
-            content: '💬';
-            font-size: 2rem;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-        }
-
-        .spinner {
-            border: 3px solid rgba(233, 69, 96, 0.1);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .no-photos {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-light);
-            background: rgba(233, 69, 96, 0.05);
-            border-radius: 15px;
-            border: 2px dashed var(--accent);
-        }
-
-        .no-photos .icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-card .icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .menu-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 0.5rem; font-weight: 700; }
+        .menu-card p { color: #666; font-size: 0.95rem; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 1000; overflow-y: auto; }
+        .modal.active { display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .modal-content { background: white; border-radius: 30px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 30px 90px rgba(0,0,0,0.3); }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .modal-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2.5rem; border-radius: 30px 30px 0 0; position: relative; }
+        .modal-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; }
+        .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; color: white; cursor: pointer; transition: all 0.3s ease; }
+        .close-btn:hover { background: var(--accent); transform: rotate(90deg); }
+        .modal-body { padding: 2.5rem; }
+        .info-section { margin-bottom: 2rem; }
+        .info-section h3 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.3rem; margin-bottom: 1rem; }
+        .info-section ul { list-style: none; padding-left: 0; }
+        .info-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; line-height: 1.8; }
+        .info-section li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        .map-link { display: inline-block; background: var(--accent); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; margin-top: 0.5rem; border: none; cursor: pointer; }
+        .map-link:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3); }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; aspect-ratio: 1; cursor: pointer; transition: transform 0.3s ease; background: #f0f0f0; }
+        .gallery-item:hover { transform: scale(1.05); z-index: 10; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; width: 70px; height: 70px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); cursor: pointer; transition: all 0.3s ease; z-index: 999; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .whatsapp-float:hover { transform: scale(1.15); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float::before { content: '💬'; font-size: 2rem; }
+        .loading { text-align: center; padding: 2rem; color: #666; }
+        .spinner { border: 3px solid rgba(233, 69, 96, 0.1); border-top: 3px solid var(--accent); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 1rem auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .no-photos { text-align: center; padding: 3rem 2rem; color: #666; background: rgba(233, 69, 96, 0.05); border-radius: 15px; border: 2px dashed var(--accent); }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .lightbox-close { position: absolute; top: 2rem; right: 2rem; color: white; font-size: 2.5rem; cursor: pointer; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; transition: all 0.3s ease; }
+        .lightbox-close:hover { background: var(--accent); transform: rotate(90deg); }
+        .foto-counter { background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 1rem; }
         @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1rem;
-            }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .modal-content {
-                margin: 1rem;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-
-            .whatsapp-float {
-                width: 60px;
-                height: 60px;
-                bottom: 1.5rem;
-                right: 1.5rem;
-            }
-        }
-
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90vh;
-            border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: scaleIn 0.3s ease;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .lightbox-close:hover {
-            background: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        .foto-counter {
-            background: var(--accent);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
+            .container { padding: 2rem 1rem; }
+            .menu-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .modal-content { margin: 1rem; }
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .whatsapp-float { width: 60px; height: 60px; bottom: 1.5rem; right: 1.5rem; }
         }
     </style>
 </head>
 <body>
     <div class="bg-decoration"></div>
-
     <header>
-        <h1>ID Eventos Campinas</h1>
+        <h1>Espaços para Eventos</h1>
         <p class="subtitle">Encontre o local perfeito para seu evento</p>
     </header>
-
     <div class="container">
         <div class="menu-grid">
             <div class="menu-card" onclick="openModal('imperial')">
@@ -561,31 +94,26 @@
                 <h3>Espaço Imperial</h3>
                 <p>Jardim Uruguai - Campinas/SP</p>
             </div>
-
             <div class="menu-card" onclick="openModal('dunlop')">
                 <span class="icon">🎉</span>
                 <h3>Dunlop Eventos</h3>
                 <p>Satélite Iris 1 - Campinas/SP</p>
             </div>
-
             <div class="menu-card" onclick="openModal('palmeira')">
                 <span class="icon">🌴</span>
                 <h3>Chácara Palmeira Real</h3>
                 <p>Monte Mor/SP</p>
             </div>
-
             <div class="menu-card" onclick="openModal('datas')">
                 <span class="icon">📅</span>
                 <h3>Datas Disponíveis</h3>
                 <p>Consulte disponibilidade</p>
             </div>
-
             <div class="menu-card" onclick="openModal('perguntas')">
                 <span class="icon">❓</span>
                 <h3>Outras Perguntas</h3>
                 <p>Dúvidas frequentes</p>
             </div>
-
             <div class="menu-card" onclick="abrirWhatsApp()">
                 <span class="icon">👤</span>
                 <h3>Falar com Atendente</h3>
@@ -594,7 +122,6 @@
         </div>
     </div>
 
-    <!-- Modais -->
     <div id="modal-imperial" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -605,11 +132,8 @@
                 <div class="info-section">
                     <h3>📍 Localização</h3>
                     <p>Rua Natale Geraldo, 290<br>Jardim Uruguai - Campinas/SP</p>
-                    <a href="https://maps.google.com/?q=-22.959072,-47.141411" target="_blank" class="map-link">
-                        🗺️ Abrir no Google Maps
-                    </a>
+                    <a href="https://maps.google.com/?q=-22.959072,-47.141411" target="_blank" class="map-link">🗺️ Abrir no Google Maps</a>
                 </div>
-
                 <div class="info-section">
                     <h3>💰 Valores</h3>
                     <ul>
@@ -618,7 +142,6 @@
                         <li>Sábado e Domingo: R$ 550,00</li>
                     </ul>
                 </div>
-
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-imperial" class="gallery"></div>
@@ -637,11 +160,8 @@
                 <div class="info-section">
                     <h3>📍 Localização</h3>
                     <p>Rua Dr. Carlos Macia, 388<br>Satélite Iris 1 - Campinas/SP</p>
-                    <a href="https://goo.gl/maps/FjAeUzzmXjTN45At9" target="_blank" class="map-link">
-                        🗺️ Abrir no Google Maps
-                    </a>
+                    <a href="https://goo.gl/maps/FjAeUzzmXjTN45At9" target="_blank" class="map-link">🗺️ Abrir no Google Maps</a>
                 </div>
-
                 <div class="info-section">
                     <h3>💰 Valores</h3>
                     <ul>
@@ -650,7 +170,6 @@
                         <li>Sábado e Domingo: R$ 600,00</li>
                     </ul>
                 </div>
-
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-dunlop" class="gallery"></div>
@@ -669,11 +188,8 @@
                 <div class="info-section">
                     <h3>📍 Localização</h3>
                     <p>Rua Dezesseis, 401<br>Monte Mor/SP</p>
-                    <a href="https://maps.app.goo.gl/xYQ3WxYJj1wmd4Sa7?g_st=com.google.maps.preview.copy" target="_blank" class="map-link">
-                        🗺️ Abrir no Google Maps
-                    </a>
+                    <a href="https://maps.app.goo.gl/xYQ3WxYJj1wmd4Sa7" target="_blank" class="map-link">🗺️ Abrir no Google Maps</a>
                 </div>
-
                 <div class="info-section">
                     <h3>💰 Valores</h3>
                     <ul>
@@ -681,7 +197,6 @@
                         <li>Sábado + Domingo: R$ 1.200,00</li>
                     </ul>
                 </div>
-
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
                     <div id="gallery-palmeira" class="gallery"></div>
@@ -700,9 +215,7 @@
                 <div class="info-section">
                     <p>Para consultar datas disponíveis e fazer sua reserva, entre em contato conosco pelo WhatsApp.</p>
                     <br>
-                    <button onclick="abrirWhatsApp()" class="map-link">
-                        💬 Consultar pelo WhatsApp
-                    </button>
+                    <button onclick="abrirWhatsApp()" class="map-link">💬 Consultar pelo WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -718,9 +231,7 @@
                 <div class="info-section">
                     <p>Tem alguma dúvida sobre nossos espaços? Fale conosco pelo WhatsApp e nossa equipe terá prazer em ajudá-lo!</p>
                     <br>
-                    <button onclick="abrirWhatsApp()" class="map-link">
-                        💬 Falar pelo WhatsApp
-                    </button>
+                    <button onclick="abrirWhatsApp()" class="map-link">💬 Falar pelo WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -728,59 +239,76 @@
 
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Imagem ampliada">
+        <img id="lightbox-img" src="" alt="">
     </div>
 
-    <div class="whatsapp-float" onclick="abrirWhatsApp()" title="Falar no WhatsApp"></div>
+    <div class="whatsapp-float" onclick="abrirWhatsApp()"></div>
 
     <script>
-        // ⚙️ CONFIGURAÇÃO DAS FOTOS
-        // Adicione os nomes dos arquivos de foto de cada local aqui
-        const fotosPorLocal = {
-            imperial: [
-                // Adicione os nomes das fotos do Imperial aqui
-                // Exemplo: 'foto1.jpg', 'foto2.jpg', 'foto3.png'
-            ],
-            dunlop: [
-                // Adicione os nomes das fotos do Dunlop aqui
-                // Exemplo: 'foto1.jpg', 'foto2.jpg'
-            ],
-            palmeira: [
-                // Adicione os nomes das fotos da Palmeira aqui
-                // Exemplo: 'foto1.jpg', 'foto2.jpg'
-            ]
+        // ⚠️ CONFIGURAÇÃO - ALTERE AQUI ⚠️
+        const CONFIG = {
+            githubUser: 'foregato',
+            githubRepo: 'SiteCh-cara',
+            githubBranch: 'main',
+            whatsappNumber: '5519999999999'
         };
 
-        // Mapear nomes amigáveis para nomes de pasta
-        const pastasMapping = {
-            'imperial': 'Imperial',
-            'dunlop': 'Dunlop',
-            'palmeira': 'Palmeira'
-        };
+        async function carregarFotosDoGitHub(pasta) {
+            const gallery = document.getElementById(`gallery-${pasta}`);
+            gallery.innerHTML = '<div class="loading"><div class="spinner"></div><p>Carregando fotos...</p></div>';
 
-        // Abrir modal
-        function openModal(tipo) {
-            const modal = document.getElementById(`modal-${tipo}`);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            try {
+                const apiUrl = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/fotos/${pasta}?ref=${CONFIG.githubBranch}`;
+                const response = await fetch(apiUrl);
                 
-                if (['imperial', 'dunlop', 'palmeira'].includes(tipo)) {
-                    carregarGaleria(tipo);
+                if (!response.ok) throw new Error('Pasta não encontrada');
+
+                const files = await response.json();
+                const imageFiles = files.filter(file => 
+                    file.type === 'file' && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+                );
+
+                if (imageFiles.length === 0) {
+                    gallery.innerHTML = '<div class="no-photos"><p><strong>Nenhuma foto disponível</strong></p><p>Adicione fotos na pasta fotos/' + pasta + '/ do GitHub</p></div>';
+                    return;
                 }
+
+                gallery.innerHTML = '<div class="foto-counter">📸 ' + imageFiles.length + ' foto' + (imageFiles.length > 1 ? 's' : '') + ' disponível' + (imageFiles.length > 1 ? 'eis' : '') + '</div>';
+
+                imageFiles.forEach((file, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.style.animationDelay = (index * 0.05) + 's';
+                    const imageUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/${CONFIG.githubBranch}/fotos/${pasta}/${file.name}`;
+                    item.innerHTML = '<img src="' + imageUrl + '" alt="' + file.name + '" loading="lazy">';
+                    item.onclick = () => openLightbox(imageUrl);
+                    gallery.appendChild(item);
+                });
+
+            } catch (error) {
+                console.error('Erro:', error);
+                gallery.innerHTML = '<div class="no-photos"><p><strong>Erro ao carregar fotos</strong></p><p>Verifique o repositório no GitHub</p></div>';
             }
         }
 
-        // Fechar modal
+        function openModal(tipo) {
+            const modal = document.getElementById('modal-' + tipo);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                const mapeamento = { 'imperial': 'Imperial', 'dunlop': 'Dunlop', 'palmeira': 'Palmeira' };
+                if (mapeamento[tipo]) carregarFotosDoGitHub(mapeamento[tipo]);
+            }
+        }
+
         function closeModal(tipo) {
-            const modal = document.getElementById(`modal-${tipo}`);
+            const modal = document.getElementById('modal-' + tipo);
             if (modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         }
 
-        // Fechar modal ao clicar fora
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('active');
@@ -788,66 +316,23 @@
             }
         }
 
-        // Carregar galeria de fotos
-        function carregarGaleria(tipo) {
-            const gallery = document.getElementById(`gallery-${tipo}`);
-            const fotos = fotosPorLocal[tipo];
-            const nomePasta = pastasMapping[tipo];
-
-            if (!fotos || fotos.length === 0) {
-                gallery.innerHTML = `
-                    <div class="no-photos">
-                        <div class="icon">📷</div>
-                        <p><strong>Configure as fotos no código</strong></p>
-                        <p>Edite o array <code>fotosPorLocal.${tipo}</code> no index.html</p>
-                    </div>
-                `;
-                return;
-            }
-
-            gallery.innerHTML = `<div class="foto-counter">📸 ${fotos.length} foto${fotos.length > 1 ? 's' : ''} disponível${fotos.length > 1 ? 'eis' : ''}</div>`;
-
-            fotos.forEach((nomeFoto, index) => {
-                const caminhoFoto = `fotos/${nomePasta}/${nomeFoto}`;
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.style.animationDelay = `${index * 0.05}s`;
-                item.style.animation = 'fadeInUp 0.5s ease-out backwards';
-                item.innerHTML = `<img src="${caminhoFoto}" alt="${nomeFoto}" loading="lazy" onerror="this.parentElement.style.display='none'">`;
-                item.onclick = () => openLightbox(caminhoFoto);
-                gallery.appendChild(item);
-            });
-        }
-
-        // Lightbox
         function openLightbox(src) {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            img.src = src;
-            lightbox.classList.add('active');
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
         }
 
         function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
+            document.getElementById('lightbox').classList.remove('active');
         }
 
-        // Abrir WhatsApp
         function abrirWhatsApp() {
-            // ⚠️ ALTERE SEU NÚMERO AQUI
-            // Formato: 5519999999999 (55 = Brasil, 19 = DDD, 999999999 = número)
-            const numeroWhatsApp = '5519988255587';
             const mensagem = encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações sobre os espaços para eventos.');
-            const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-            window.open(url, '_blank');
+            window.open('https://wa.me/' + CONFIG.whatsappNumber + '?text=' + mensagem, '_blank');
         }
 
-        // Atalho ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.active').forEach(modal => {
-                    modal.classList.remove('active');
-                });
+                document.querySelectorAll('.modal.active').forEach(modal => modal.classList.remove('active'));
                 document.body.style.overflow = 'auto';
                 closeLightbox();
             }
