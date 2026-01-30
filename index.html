@@ -84,7 +84,7 @@
 <body>
     <div class="bg-decoration"></div>
     <header>
-        <h1>ID Eventos Campinas</h1>
+        <h1>Espaços para Eventos</h1>
         <p class="subtitle">Encontre o local perfeito para seu evento</p>
     </header>
     <div class="container">
@@ -144,7 +144,9 @@
                 </div>
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-imperial" class="gallery"></div>
+                    <p>Gostaria de ver fotos do Espaço Imperial? Entre em contato pelo WhatsApp e teremos prazer em enviar todas as imagens do local!</p>
+                    <br>
+                    <button onclick="abrirWhatsAppFotos('Imperial')" class="map-link">📸 Solicitar Fotos pelo WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -172,7 +174,9 @@
                 </div>
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-dunlop" class="gallery"></div>
+                    <p>Gostaria de ver fotos do Dunlop Eventos? Entre em contato pelo WhatsApp e teremos prazer em enviar todas as imagens do local!</p>
+                    <br>
+                    <button onclick="abrirWhatsAppFotos('Dunlop')" class="map-link">📸 Solicitar Fotos pelo WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -199,7 +203,9 @@
                 </div>
                 <div class="info-section">
                     <h3>📸 Fotos do Local</h3>
-                    <div id="gallery-palmeira" class="gallery"></div>
+                    <p>Gostaria de ver fotos da Chácara Palmeira Real? Entre em contato pelo WhatsApp e teremos prazer em enviar todas as imagens do local!</p>
+                    <br>
+                    <button onclick="abrirWhatsAppFotos('Palmeira')" class="map-link">📸 Solicitar Fotos pelo WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -247,62 +253,14 @@
     <script>
         // ⚠️ CONFIGURAÇÃO - ALTERE AQUI ⚠️
         const CONFIG = {
-            githubUser: 'foregato',
-            githubRepo: 'SiteCh-cara',
-            githubBranch: 'main',
-            whatsappNumber: '5519988255587'
+            whatsappNumber: '5519999999999'  // ← ALTERE PARA SEU NÚMERO
         };
-
-        async function carregarFotosDoGitHub(pasta) {
-            const gallery = document.getElementById(`gallery-${pasta}`);
-            gallery.innerHTML = '<div class="loading"><div class="spinner"></div><p>Carregando fotos...</p></div>';
-
-            try {
-                const apiUrl = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/fotos/${pasta}?ref=${CONFIG.githubBranch}`;
-                const response = await fetch(apiUrl);
-                
-                if (!response.ok) throw new Error('Pasta não encontrada');
-
-                const files = await response.json();
-                const imageFiles = files.filter(file => 
-                    file.type === 'file' && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
-                );
-                const mapeamento = { 
-    'imperial': 'Imperial', // Deve ser 'Imperial' com I maiúsculo
-    'dunlop': 'Dunlop',     // Deve ser 'Dunlop' com D maiúsculo
-    'palmeira': 'Palmeira'  // Deve ser 'Palmeira' com P maiúsculo
-};
-
-                if (imageFiles.length === 0) {
-                    gallery.innerHTML = '<div class="no-photos"><p><strong>Nenhuma foto disponível</strong></p><p>Adicione fotos na pasta fotos/' + pasta + '/ do GitHub</p></div>';
-                    return;
-                }
-
-                gallery.innerHTML = '<div class="foto-counter">📸 ' + imageFiles.length + ' foto' + (imageFiles.length > 1 ? 's' : '') + ' disponível' + (imageFiles.length > 1 ? 'eis' : '') + '</div>';
-
-                imageFiles.forEach((file, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.style.animationDelay = (index * 0.05) + 's';
-                    const imageUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/${CONFIG.githubBranch}/fotos/${pasta}/${file.name}`;
-                    item.innerHTML = '<img src="' + imageUrl + '" alt="' + file.name + '" loading="lazy">';
-                    item.onclick = () => openLightbox(imageUrl);
-                    gallery.appendChild(item);
-                });
-
-            } catch (error) {
-                console.error('Erro:', error);
-                gallery.innerHTML = '<div class="no-photos"><p><strong>Erro ao carregar fotos</strong></p><p>Verifique o repositório no GitHub</p></div>';
-            }
-        }
 
         function openModal(tipo) {
             const modal = document.getElementById('modal-' + tipo);
             if (modal) {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                const mapeamento = { 'imperial': 'Imperial', 'dunlop': 'Dunlop', 'palmeira': 'Palmeira' };
-                if (mapeamento[tipo]) carregarFotosDoGitHub(mapeamento[tipo]);
             }
         }
 
@@ -335,6 +293,16 @@
             window.open('https://wa.me/' + CONFIG.whatsappNumber + '?text=' + mensagem, '_blank');
         }
 
+        function abrirWhatsAppFotos(local) {
+            const mensagens = {
+                'Imperial': 'Olá! Gostaria de ver as fotos do Espaço Imperial. Pode me enviar?',
+                'Dunlop': 'Olá! Gostaria de ver as fotos do Dunlop Eventos. Pode me enviar?',
+                'Palmeira': 'Olá! Gostaria de ver as fotos da Chácara Palmeira Real. Pode me enviar?'
+            };
+            const mensagem = encodeURIComponent(mensagens[local] || 'Olá! Gostaria de ver fotos dos espaços.');
+            window.open('https://wa.me/' + CONFIG.whatsappNumber + '?text=' + mensagem, '_blank');
+        }
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal.active').forEach(modal => modal.classList.remove('active'));
@@ -345,5 +313,3 @@
     </script>
 </body>
 </html>
-
-
